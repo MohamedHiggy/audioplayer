@@ -5,6 +5,7 @@
           <the-nav @toggleAside="toggleAside"/>
           <div class="container-fluid pt-4 pb-5 content">
               <Nuxt />
+              <the-audio-player />
           </div>
       </main>
   </div>
@@ -47,10 +48,6 @@
 
 
 <style lang="scss">
-.rtl {
-  direction: rtl;
-  text-align: right;
-}
 
 *,
 *::before,
@@ -140,7 +137,9 @@ p {
 }
 
 .content {
-background-color: #F7F9FD;
+  background-color: #F7F9FD;
+  min-height: 100vh;
+  position: relative;
 }
 
 main.active{
@@ -158,12 +157,12 @@ main{
 
 @media(min-width:300px) and (max-width:1023.98px){
     .aside-nav{
-        top: 63px !important;
+        top: 107px !important;
     }
     main{
         margin-left: 0px !important;
         overflow: hidden;
-        margin-top: 60px !important;
+        margin-top: 100px !important;
     }
     .header-navbar{
         position:fixed !important;
