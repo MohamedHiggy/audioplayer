@@ -1,0 +1,42 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family:
+    'Source Sans Pro',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  font-size: 16px;
+  word-spacing: 1px;
+  box-sizing: border-box;
+}
+
+.border-b-0 {
+  border-bottom: 1px solid var(--border-color);
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+}
+
+
+a {
+  text-decoration: none;
+}
+.flex-c {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+}

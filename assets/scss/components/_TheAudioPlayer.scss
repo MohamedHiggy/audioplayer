@@ -1,0 +1,16 @@
+.audio-player {
+  background-color: var(--white);
+  padding: 15px;
+  border-radius: 12px;
+  position: fixed;
+  bottom: 15px;
+  z-index: 9999;
+  width: calc(100% - 260px);
+}
+
+@media(max-width:992px){
+  .audio-player {
+    background-color: red;
+    width: 100%;
+  }
+}
