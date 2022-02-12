@@ -1,6 +1,9 @@
 <template>
-  <div class="content">
-    <h1>Test</h1>
+  <div class="book-page">
+    <the-book-header />
+    <the-book-about />
+    <the-book-reviews />
+    <the-book-published />
   </div>
 </template>
 

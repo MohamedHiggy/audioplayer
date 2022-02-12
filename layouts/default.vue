@@ -3,7 +3,7 @@
       <the-side-bar :activeAside="activeAside"/>
       <main class="w-100 bg-light d-flex flex-column" :class="{active: activeAside}">
           <the-nav @toggleAside="toggleAside"/>
-          <div class="container pt-4">
+          <div class="container-fluid pt-4 pb-5 content">
               <Nuxt />
           </div>
       </main>
@@ -137,6 +137,10 @@ input[type=number] {
 
 p {
   margin: 0;
+}
+
+.content {
+background-color: #F7F9FD;
 }
 
 main.active{

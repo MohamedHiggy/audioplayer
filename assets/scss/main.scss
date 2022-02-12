@@ -7,13 +7,13 @@
   --error: #FC5F67;
   --warning: #FFAE5D;
   --success: #17D69A;
+  --dark-gray: #7F8FA4;
+  --red: #E16262;
 
   --ebony-clay: #212934;
   --green: #4FC9A3;
-  --dark-gray: #7F8FA4;
   --gray: #E6E6E6;
   --blue: #5884E8;
-  --red: #E16262;
   --yellow: #FABC60;
   --black: #000000;
   --tinted-black: #1F1F1F;
@@ -21,6 +21,18 @@
 
 .border-b-0 {
   border-bottom: 1px solid var(--border-color);
+}
+p {
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+.flex-c {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 /*__sidebar__*/
@@ -76,7 +88,7 @@
   }
 
   .aside-brand {
-    padding: 1.15rem 1rem;
+    padding: 1.95rem 1rem;
     color: #fff;
     background-color: var(--main-color);
     white-space: nowrap;
@@ -93,6 +105,11 @@
   }
   .navbar {
     background-color: var(--main-color);
+    padding: 15px;
+  }
+  .navbar-nav {
+    align-items: center;
+    gap: 30px;
   }
   .user-dropdown{
     position: relative;
@@ -120,10 +137,37 @@
         }
       }
     }
-    .username {
-      background-color: transparent;
+  }
+  .nav-item {
+    .nav-item-content {
       border: none;
       padding: 0.5rem 1rem;
+      border-radius: 12px;
+      background-color: rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 10px;
+      img {
+        border-radius: 50%;
+      }
+      .user-info {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 20px;
+        text-align: left;
+        .text {
+          font-weight: bold;
+          text-transform: capitalize;
+          color: var(--white);
+          line-height: 20px;
+          span {
+            font-weight: normal;
+            font-size: 14px;
+          }
+        }
+      }
     }
   }
 }
@@ -133,4 +177,319 @@
 }
 .fade-enter, .fade-leave-active {
   opacity: 0;
+}
+
+
+/*__book__*/
+.book-page {
+  .book-header {
+    .book-image {
+      width: 424px;
+      height: 650px;
+      position: relative;
+      .image {
+        width: 424px;
+        width: 100%;
+        height: 599px;
+        object-fit: cover;
+      }
+      .book-bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: var(--white);
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 85%;
+        height: 80px;
+        border-radius: 15px;
+        color: #fff;
+        margin: 0 auto;
+        .item {
+          background-color: var(--main-color);
+          width: 49%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 20px;
+          .item-text {
+            .title{
+              font-weight: 500;
+              font-size: 20px;
+            }
+          }
+        }
+        .item:nth-child(1) {
+          border-radius: 15px 0 0 15px;
+        }
+        .item:nth-child(2) {
+          border-radius: 0 15px 15px 0;
+        }
+      }
+    }
+    .book-details {
+      .title {
+        color: var(--black);
+      }
+      .auther {
+        color: var(--black);
+        font-weight: bold;
+        span {
+          color: var(--main-color);
+        }
+      }
+      .book-actions {
+        align-items: center;
+        margin-top: 20px;
+        .action-btn {
+          border: none;
+          background-color: var(--white);
+          color: var(--black);
+          font-weight: bold;
+          align-items: center;
+          gap:5px;
+          padding: 8px 15px;
+          border-radius: 12px;
+        }
+      }
+      .book-stats {
+        margin-top: 20px;
+        .item {
+          width: 168px;
+          height: 80px;
+          border-radius: 12px;
+          padding: 7px 15px;
+          color: #fff;
+          .item-icon {
+            border-radius: 5px;
+            background-color: var(--white);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          .item-text {
+            .num {
+              font-weight: bold;
+              font-size: 20px;
+            }
+          }
+        }
+        .item:nth-child(1) {
+          background-color: var(--main-color);
+        }
+        .item:nth-child(2) {
+          background-color: var(--red);
+        }
+        .item:nth-child(3) {
+          background-color: var(--dark-gray);
+        }
+      }
+    }
+  }
+
+  .book-about {
+  }
+}
+
+
+
+.tabs {
+  position: relative;
+  .list-style {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1px;
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: -2px;
+      width: 100%;
+      height: 0.5px;
+    }
+    .list {
+      .list-btn {
+        background-color: transparent;
+        color: #A0AEC0;
+        padding: 8px 20px 8px 0;
+        transition: all 0.3s ease-in-out;
+        border: 2px solid transparent;
+        &:hover {
+          border-bottom: 2px solid var(--main-color);
+          color: var(--main-color);
+        }
+      }
+    }
+    .is-active {
+      .list-btn {
+        border-bottom: 2px solid var(--main-color);
+        color: var(--main-color);
+      }
+    }
+  }
+}
+
+.tabs-details {
+  margin-top: 15px;
+  .about-text {
+    background-color: var(--white);
+    width: 700px;
+    border-radius: 15px;
+    padding: 15px;
+  }
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .header-title {
+    color: var(--black);
+    font-weight: 500;
+    font-size: 24px;
+  }
+  .header-right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    .right-text {
+      color: var(--dark-gray);
+      font-weight: 500;
+      font-size: 20px;
+    }
+    .slider-button {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      .button-slide {
+        width: 48px;
+        height: 48px;
+        border: none;
+        border-radius: 50%;
+        background-color: var(--main-color);
+        &:disabled {
+          background-color: rgba(58, 150, 121, 0.1);
+          color: #fff;
+          cursor: not-allowed;
+          &:hover {
+              box-shadow: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.card {
+  padding: 15px 15px 5px 15px;
+  border: none;
+  border-radius: 24px;
+  .card-img-top {
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    img {
+      object-fit: cover;
+    }
+    .play-box {
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease-in-out;
+      .play-btn {
+        border: none;
+        width: 64px;
+        height: 64px;
+        background-color: var(--white);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+      }
+    }
+    &:hover {
+      .play-box {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+  .card-body {
+    padding-right: 0;
+    padding-left: 0;
+    .card-stats {
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+      .stat {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 5px;
+        .stat-text {
+          color: var(--dark-gray);
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+.review-card {
+  padding: 15px 15px 5px 15px;
+  border-radius: 24px;
+  background-color: var(--white);
+  .review-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    .card-image {
+      width: 150px;
+      height: 80px;
+      position: relative;
+      img {
+        border-radius: 50%;
+      }
+      .stat {
+        width: 45px;
+        height: 45px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background-color: var(--white);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+      }
+    }
+    .card-info {
+      .title {
+        color: var(--black);
+        font-weight: 500;
+      }
+      .sub-title {
+        color: var(--dark-gray);
+        font-weight: normal;
+        font-size: 14px;
+      }
+    }
+  }
 }
