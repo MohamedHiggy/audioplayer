@@ -5,18 +5,22 @@
           <the-nav @toggleAside="toggleAside"/>
           <div class="container-fluid pt-4 pb-5 content">
               <Nuxt />
-              <the-audio-player />
+              <the-audio-player :playedBook="playedBook"/>
           </div>
       </main>
   </div>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   export default {
     data() {
       return {
         activeAside: false,
       }
+    },
+    computed: {
+      ...mapState(['playedBook'])
     },
     mounted() {
       this.$nextTick(() => {

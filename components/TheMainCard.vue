@@ -1,9 +1,9 @@
 <template>
   <div class="card shadow-sm">
     <div class="card-img-top">
-      <img src="~/assets/images/card.jpg" alt="Card image cap" height="408px" width="100%">
+      <img :src="item.image" alt="Card image cap" height="408px" width="100%">
       <div class="play-box">
-        <button @click.prevent="playAudio" class="play-btn">
+        <button @click.prevent="playAudio(item)" class="play-btn">
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
             <g id="Group_28436" data-name="Group 28436" transform="translate(-167 -738)">
               <rect id="Rectangle_6071" data-name="Rectangle 6071" width="32" height="32" transform="translate(167 738)" fill="none"/>
@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="card-body">
-      <h4 class="card-title">Men are from Mars, Women are from Venus.</h4>
+      <h4 class="card-title">{{item.title}}</h4>
       <div class="card-stats">
         <div class="stat">
           <img src="../assets/icons/shared/green_headSet.svg" alt="icon" width="28" height="28">
@@ -22,7 +22,9 @@
         </div>
         <div class="stat">
           <img src="../assets/icons/shared/greenBook.svg" alt="icon" width="28" height="28">
-          <p class="stat-text">08.Pages</p>
+          <p class="stat-text">
+            {{ item.books_pages > 1 ? item.books_pages + 'pages' : item.books_pages + 'page'}}
+          </p>
         </div>
       </div>
     </div>
@@ -31,9 +33,15 @@
 
 <script>
   export default {
+    props: {
+      item: {
+        type: Object,
+        required: true
+      }
+    },
     methods: {
-      playAudio() {
-        console.log("ss");
+      playAudio(event) {
+        this.$store.dispatch('playAudio', event)
       }
     }
   }
