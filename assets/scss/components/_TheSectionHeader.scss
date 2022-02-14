@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   .header-title {
     color: var(--black);
     font-weight: 500;
@@ -38,5 +39,12 @@
         }
       }
     }
+  }
+}
+
+ @media(max-width:425px){
+  .section-header {
+    justify-content: center;
+    row-gap: 10px;
   }
 }

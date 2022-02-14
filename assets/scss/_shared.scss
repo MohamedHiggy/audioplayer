@@ -6,34 +6,79 @@
   padding: 0;
 }
 
-html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+html,body {
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   box-sizing: border-box;
+  background-color: #F7F9FD;
+}
+
+.content {
+  min-height: 100vh;
+  position: relative;
+}
+
+.content.isAudio {
+  margin-bottom: 100px;
+}
+
+
+main.active {
+  margin-left: 0px !important;
+}
+main {
+  margin-left: 230px;
+  transition: margin 0.5s;
+  min-height: 100vh;
+}
+
+.aside-nav.active {
+  width: 0px !important;
+}
+
+@media (min-width: 300px) and (max-width: 1023.98px) {
+  .aside-nav {
+    top: 87px !important;
+  }
+  main {
+    margin-left: 0px !important;
+    overflow: hidden;
+    margin-top: 100px !important;
+  }
+  .header-navbar {
+    position: fixed !important;
+  }
+}
+
+@media(max-width:768px){
+  .aside-nav {
+    top: 76px !important;
+  }
+  main {
+    margin-top: 75px !important;
+  }
 }
 
 .border-b-0 {
   border-bottom: 1px solid var(--border-color);
 }
 
+
 ul {
   list-style: none;
   margin: 0;
 }
 
-
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
+
+p {
+  margin: 0;
+}
+
 .flex-c {
   display: flex;
   justify-content: flex-start;

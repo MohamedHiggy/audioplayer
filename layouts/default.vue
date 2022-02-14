@@ -6,9 +6,10 @@
       :class="{ active: activeAside }"
     >
       <the-nav @toggleAside="toggleAside" />
-      <div class="container-fluid pt-4 pb-5 content">
+      <div class="container-fluid pt-4 content" :class="[ currentBook ? 'isAudio': '']">
         <Nuxt />
         <the-audio-player
+          v-if="currentBook"
           :currentBook="currentBook"
           :isTimerPlaying="isTimerPlaying"
           :barWidth="barWidth"
@@ -17,6 +18,8 @@
           @playAudio="playAudio"
           @nextAudio="nextAudio"
           @prevAudio="prevAudio"
+          @closeAudio="closeAudio"
+          @setVolume="setVolume"
         />
       </div>
     </main>
@@ -67,6 +70,7 @@ export default {
       currentBook: null,
       currentBookIndex: 0,
       transitionName: null,
+      audioVolume: 1
     };
   },
   mounted() {
@@ -77,8 +81,10 @@ export default {
   created() {
     let vm = this;
     this.currentBook = this.books[0];
+    this.$store.dispatch('updateCurrentBook', this.books[0])
     this.audio = new Audio();
     this.audio.src = this.currentBook.source;
+    this.audio.volume = this.audioVolume
     this.audio.ontimeupdate = function () {
       vm.generateTime();
     };
@@ -96,6 +102,9 @@ export default {
     window.removeEventListener("resize", this.onResize);
   },
   methods: {
+    setVolume (val) {
+      this.audio.volume = val
+    },
     generateTime() {
       let width = (100 / this.audio.duration) * this.audio.currentTime;
       this.barWidth = width + "%";
@@ -123,9 +132,27 @@ export default {
       if (this.audio.paused) {
         this.audio.play();
         this.isTimerPlaying = true;
+        this.$store.dispatch('updatePlayedBook', true)
       } else {
+        this.$store.dispatch('updatePlayedBook', false)
         this.audio.pause();
         this.isTimerPlaying = false;
+      }
+    },
+    closeAudio() {
+      if (this.isTimerPlaying) {
+        this.audio.pause();
+        this.$store.dispatch('updatePlayedBook', false)
+        this.audio.currentTime = 0;
+        this.audio= null
+        this.circleLeft= null
+        this.barWidth= null
+        this.duration= null
+        this.currentTime= null
+        this.isTimerPlaying= false
+        this.currentBook= null
+        this.currentBookIndex= 0
+        this.transitionName= null
       }
     },
     nextAudio() {
@@ -135,6 +162,7 @@ export default {
         this.currentBookIndex = 0;
       }
       this.currentBook = this.books[this.currentBookIndex];
+      this.$store.dispatch('updateCurrentBook', this.books[this.currentBookIndex])
       this.resetPlayer();
     },
     resetPlayer() {
@@ -145,8 +173,10 @@ export default {
       setTimeout(() => {
         if (this.isTimerPlaying) {
           this.audio.play();
+          this.$store.dispatch('updatePlayedBook', true)
         } else {
           this.audio.pause();
+          this.$store.dispatch('updatePlayedBook', false)
         }
       }, 300);
     },
@@ -157,6 +187,7 @@ export default {
         this.currentBookIndex = this.books.length - 1;
       }
       this.currentBook = this.books[this.currentBookIndex];
+      this.$store.dispatch('updateCurrentBook', this.books[this.currentBookIndex])
       this.resetPlayer();
     },
     onResize() {
@@ -173,120 +204,3 @@ export default {
 };
 </script>
 
-<style lang="scss">
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  box-sizing: border-box;
-}
-
-ul {
-  list-style: none;
-  margin: 0;
-}
-
-a {
-  text-decoration: none !important;
-}
-
-label {
-  cursor: pointer;
-  margin-bottom: 0;
-}
-
-/* Firefox */
-input[type="checkbox"] {
-  cursor: pointer;
-}
-
-select {
-  /* for Firefox */
-  -moz-appearance: none;
-  /* for Chrome */
-  -webkit-appearance: none;
-  cursor: pointer;
-}
-
-/* For IE10 */
-select::-ms-expand {
-  display: none;
-}
-
-textarea {
-  resize: none;
-  border-radius: 10px !important;
-}
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-::placeholder {
-  /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #a0aec0;
-  opacity: 1; /* Firefox */
-}
-
-:-ms-input-placeholder {
-  /* Internet Explorer 10-11 */
-  color: #a0aec0;
-}
-
-::-ms-input-placeholder {
-  /* Microsoft Edge */
-  color: #a0aec0;
-}
-
-p {
-  margin: 0;
-}
-
-.content {
-  background-color: #f7f9fd;
-  min-height: 100vh;
-  position: relative;
-}
-
-main.active {
-  margin-left: 0px !important;
-}
-main {
-  margin-left: 230px;
-  transition: margin 0.5s;
-  min-height: 100vh;
-}
-
-.aside-nav.active {
-  width: 0px !important;
-}
-
-@media (min-width: 300px) and (max-width: 1023.98px) {
-  .aside-nav {
-    top: 107px !important;
-  }
-  main {
-    margin-left: 0px !important;
-    overflow: hidden;
-    margin-top: 100px !important;
-  }
-  .header-navbar {
-    position: fixed !important;
-  }
-}
-</style>

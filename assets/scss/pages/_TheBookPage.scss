@@ -110,3 +110,18 @@
     }
   }
 }
+
+
+@media(max-width:992px){
+  .book-page {
+    .book-header {
+      text-align: center;
+      .book-actions {
+        justify-content: space-around;
+      }
+      .book-stats {
+        justify-content: space-around;
+      }
+    }
+  }
+}

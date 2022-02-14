@@ -75,6 +75,7 @@
               </div>
           </div>
           <div class="player-advanced">
+
             <button class="advanced-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                   <g id="Group_26874" data-name="Group 26874" transform="translate(-91 -577)">
@@ -118,21 +119,25 @@
                 </svg>
             </button>
 
-            <button class="advanced-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <g id="Group_28449" data-name="Group 28449" transform="translate(-155 -726)">
-                  <rect id="Rectangle_6073" data-name="Rectangle 6073" width="24" height="24" transform="translate(155 726)" fill="none"/>
-                  <g id="Group_29111" data-name="Group 29111" transform="translate(154.75 726.592)">
-                    <path id="Path_233490" data-name="Path 233490" d="M18,16.75a.76.76,0,0,1-.45-.15.75.75,0,0,1-.15-1.05,5.94,5.94,0,0,0,0-7.1.75.75,0,0,1,1.2-.9,7.471,7.471,0,0,1,0,8.9A.739.739,0,0,1,18,16.75Z"/>
-                    <path id="Path_233491" data-name="Path 233491" d="M19.83,19.25a.76.76,0,0,1-.45-.15.75.75,0,0,1-.15-1.05,10.14,10.14,0,0,0,0-12.1.75.75,0,1,1,1.2-.9,11.64,11.64,0,0,1,0,13.9A.726.726,0,0,1,19.83,19.25Z"/>
-                    <path id="Path_233492" data-name="Path 233492" d="M14.02,3.78a3.911,3.911,0,0,0-4.01.45L7.09,6.06a1.3,1.3,0,0,1-.66.19H5A3.381,3.381,0,0,0,1.25,10v4A3.381,3.381,0,0,0,5,17.75H6.43a1.3,1.3,0,0,1,.66.19l2.92,1.83a4.832,4.832,0,0,0,2.54.82,3,3,0,0,0,1.47-.37,3.9,3.9,0,0,0,1.73-3.63V7.41A3.9,3.9,0,0,0,14.02,3.78Z"/>
+            <div class="volume-box">
+              <button  @click="showSliderVolume" class="advanced-btn">
+                <svg v-if="volume != 0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                  <g id="Group_28449" data-name="Group 28449" transform="translate(-155 -726)">
+                    <rect id="Rectangle_6073" data-name="Rectangle 6073" width="24" height="24" transform="translate(155 726)" fill="none"/>
+                    <g id="Group_29111" data-name="Group 29111" transform="translate(154.75 726.592)">
+                      <path id="Path_233490" data-name="Path 233490" d="M18,16.75a.76.76,0,0,1-.45-.15.75.75,0,0,1-.15-1.05,5.94,5.94,0,0,0,0-7.1.75.75,0,0,1,1.2-.9,7.471,7.471,0,0,1,0,8.9A.739.739,0,0,1,18,16.75Z"/>
+                      <path id="Path_233491" data-name="Path 233491" d="M19.83,19.25a.76.76,0,0,1-.45-.15.75.75,0,0,1-.15-1.05,10.14,10.14,0,0,0,0-12.1.75.75,0,1,1,1.2-.9,11.64,11.64,0,0,1,0,13.9A.726.726,0,0,1,19.83,19.25Z"/>
+                      <path id="Path_233492" data-name="Path 233492" d="M14.02,3.78a3.911,3.911,0,0,0-4.01.45L7.09,6.06a1.3,1.3,0,0,1-.66.19H5A3.381,3.381,0,0,0,1.25,10v4A3.381,3.381,0,0,0,5,17.75H6.43a1.3,1.3,0,0,1,.66.19l2.92,1.83a4.832,4.832,0,0,0,2.54.82,3,3,0,0,0,1.47-.37,3.9,3.9,0,0,0,1.73-3.63V7.41A3.9,3.9,0,0,0,14.02,3.78Z"/>
+                    </g>
                   </g>
-                </g>
-              </svg>
-            </button>
+                </svg>
+                <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: #000"><path d="m7.727 6.313-4.02-4.02-1.414 1.414 18 18 1.414-1.414-2.02-2.02A9.578 9.578 0 0 0 21.999 12c0-4.091-2.472-7.453-5.999-9v2c2.387 1.386 3.999 4.047 3.999 7a8.13 8.13 0 0 1-1.671 4.914l-1.286-1.286C17.644 14.536 18 13.19 18 12c0-1.771-.775-3.9-2-5v7.586l-2-2V2.132L7.727 6.313zM4 17h2.697L14 21.868v-3.747L3.102 7.223A1.995 1.995 0 0 0 2 9v6c0 1.103.897 2 2 2z"></path></svg>
+              </button>
+              <input type="range" v-if="showslider" class="input-range" step="0.005" min="0" max="1" v-model="volume">
+            </div>
 
-            <button class="advanced-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+            <button class="advanced-btn" @click="closeAudio" v-if="isTimerPlaying">
+              <svg  xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
                 <g id="Group_28463" data-name="Group 28463" transform="translate(-126 -724.424)">
                   <g id="Group_35297" data-name="Group 35297" transform="translate(126 764.424) rotate(-90)">
                     <rect id="Rectangle_6585" data-name="Rectangle 6585" width="40" height="40" rx="20" fill="#e16262" opacity="0.1"/>
@@ -148,6 +153,7 @@
               </svg>
             </button>
 
+
           </div>
         </section>
   </div>
@@ -156,6 +162,17 @@
 <script>
   export default {
     props: ['currentBook', 'isTimerPlaying', 'barWidth', 'currentTime', 'duration'],
+    data() {
+      return {
+        volume: 1,
+        showslider: false
+      }
+    },
+    watch: {
+      volume (newVal) {
+        this.$emit('setVolume', newVal)
+      },
+    },
     methods: {
       playAudio() {
         this.$emit('playAudio')
@@ -165,6 +182,12 @@
       },
       prevAudio () {
         this.$emit('prevAudio')
+      },
+      closeAudio () {
+        this.$emit('closeAudio')
+      },
+      showSliderVolume() {
+        this.showslider = !this.showslider
       }
     }
   }

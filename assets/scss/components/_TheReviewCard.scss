@@ -41,7 +41,7 @@
   }
   .review-card-reactions {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
     padding: 5px 0;
@@ -53,6 +53,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 5px;
+      margin-bottom: 5px;
       .icons {
         display: flex;
         justify-content: flex-start;

@@ -44,3 +44,12 @@
     padding: 15px;
   }
 }
+
+
+@media(max-width:992px){
+  .tabs-details {
+    .about-text {
+      width: 100%;
+    }
+  }
+}
