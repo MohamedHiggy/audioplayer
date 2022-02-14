@@ -4,7 +4,7 @@
       <img :src="item.cover" alt="Card image cap" height="408px" width="100%">
       <div class="play-box">
         <button class="play-btn" @click="playBook">
-          <svg v-if="getCurrentBook.id == item.id && getAudioPaused" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" style="fill: #3A9679"><path d="M8 7h3v10H8zm5 0h3v10h-3z"></path></svg>
+          <svg v-if="getCurrentBook && getCurrentBook.id == item.id && getAudioPaused" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" style="fill: #3A9679"><path d="M8 7h3v10H8zm5 0h3v10h-3z"></path></svg>
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" v-else>
             <g id="Group_28436" data-name="Group 28436" transform="translate(-167 -738)">
               <rect id="Rectangle_6071" data-name="Rectangle 6071" width="32" height="32" transform="translate(167 738)" fill="none"/>
@@ -39,6 +39,10 @@
       item: {
         type: Object,
         required: true
+      },
+      index: {
+        type: Number,
+        required: true
       }
     },
     computed: {
@@ -49,7 +53,22 @@
     },
     methods: {
       playBook() {
-        this.$store.dispatch('updateCurrentBook', this.item)
+
+        if (this.item.id != this.getCurrentBook.id) {
+          let payload = {
+            index: this.index,
+            item: this.item
+          }
+          this.$store.commit('SET_BOOK', payload)
+        }
+
+        if (this.item.id == this.getCurrentBook.id && this.getAudioPaused) {
+          this.$store.commit('SET_PLAYED_BOOK', false)
+        }
+
+        if (this.item.id == this.getCurrentBook.id && !this.getAudioPaused) {
+          this.$store.dispatch('updatePlayedBook', true)
+        }
       }
     }
   }

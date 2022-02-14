@@ -18,7 +18,7 @@ export default {
   css: ["~assets/scss/main.scss"],
 
   plugins: [
-    "~plugins/persistedState.client.js"
+    //"~plugins/persistedState.client.js"
   ],
 
   components: [

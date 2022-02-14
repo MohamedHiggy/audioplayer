@@ -28,7 +28,7 @@
               </svg>
             </button>
             <button class="play-btn" @click="playAudio">
-              <svg v-if="!isTimerPlaying" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+              <svg v-if="!getAudioPaused" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                 <g id="Group_28436" data-name="Group 28436" transform="translate(-167 -738)">
                   <rect id="Rectangle_6071" data-name="Rectangle 6071" width="32" height="32" transform="translate(167 738)" fill="none"/>
                   <path id="Path_233489" data-name="Path 233489" d="M3.76,8.1v12.85A3.432,3.432,0,0,0,8.9,23.914L14.475,20.7l5.573-3.223a3.416,3.416,0,0,0,0-5.922L14.475,8.338,8.9,5.128A3.428,3.428,0,0,0,3.76,8.1Z" transform="translate(170.239 739.335)" fill="#fff"/>
@@ -70,7 +70,7 @@
                 </div>
               </div>
               <div class="progress-bottom">
-                <div class="progress-time">{{ currentTime }}</div>
+                <div class="progress-time">{{ currentTime }}</div> {{getAudioPaused}}
                 <div class="progress-time">{{ duration }}</div>
               </div>
           </div>
@@ -136,7 +136,7 @@
               <input type="range" v-if="showslider" class="input-range" step="0.005" min="0" max="1" v-model="volume">
             </div>
 
-            <button class="advanced-btn" @click="closeAudio" v-if="isTimerPlaying">
+            <button class="advanced-btn" @click="closeAudio" v-if="getAudioPaused">
               <svg  xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
                 <g id="Group_28463" data-name="Group 28463" transform="translate(-126 -724.424)">
                   <g id="Group_35297" data-name="Group 35297" transform="translate(126 764.424) rotate(-90)">
@@ -160,12 +160,17 @@
 </template>
 
 <script>
+  import {mapState, mapGetters} from 'vuex'
   export default {
-    props: ['currentBook', 'isTimerPlaying', 'barWidth', 'currentTime', 'duration'],
     data() {
       return {
         volume: 1,
-        showslider: false
+        showslider: false,
+        circleLeft: null,
+        barWidth: null,
+        duration: null,
+        currentTime: null,
+        isTimerPlaying: false,
       }
     },
     watch: {
@@ -173,22 +178,114 @@
         this.$emit('setVolume', newVal)
       },
     },
+    created() {
+      let vm = this;
+      this.$store.dispatch('updatePlayedBook', false)
+
+      this.audio.ontimeupdate = function () {
+        vm.generateTime();
+      };
+      this.audio.onloadedmetadata = function () {
+        vm.generateTime();
+      };
+      this.audio.onended = function () {
+        vm.nextAudio();
+      };
+    },
+    computed: {
+      ...mapState({
+        currentBook: 'current_book',
+        audioPaused: 'audioPaused',
+        audio: 'audio',
+        currentBookIndex: 'currentBookIndex',
+        books: 'books'
+      }),
+      ...mapGetters([
+        'getAudioPaused'
+      ])
+    },
     methods: {
       playAudio() {
-        this.$emit('playAudio')
+        if (!this.audioPaused) {
+          this.$store.dispatch('updatePlayedBook', true)
+        } else {
+          this.$store.dispatch('updatePlayedBook', false)
+        }
       },
       nextAudio () {
-        this.$emit('nextAudio')
+        if (this.currentBookIndex < this.books.length - 1) {
+          this.$store.commit('INCREMENT', true)
+        } else {
+          this.$store.commit('INCREMENT', false)
+        }
+        this.$store.commit('UPDATE_BOOK')
+        this.resetPlayer();
       },
+
+      resetPlayer() {
+        this.barWidth = 0;
+        this.circleLeft = 0;
+        this.$store.commit('RESET')
+        setTimeout(() => {
+          if (this.getAudioPaused) {
+            this.$store.dispatch('updatePlayedBook', true)
+          } else {
+            this.$store.dispatch('updatePlayedBook', false)
+          }
+        }, 300);
+      },
+
       prevAudio () {
-        this.$emit('prevAudio')
-      },
+          if (this.currentBookIndex > 0) {
+            this.$store.commit('DECREMENT', true)
+          } else {
+            this.$store.commit('DECREMENT', false)
+          }
+          this.$store.commit('UPDATE_BOOK')
+          this.resetPlayer();
+        },
       closeAudio () {
-        this.$emit('closeAudio')
+        //this.$store.dispatch('closeAudio', false)
+        /* if (this.isTimerPlaying) {
+          this.audio.pause();
+          this.$store.dispatch('updatePlayedBook', false)
+          this.audio.currentTime = 0;
+          this.audio= null
+          this.circleLeft= null
+          this.barWidth= null
+          this.duration= null
+          this.currentTime= null
+          this.isTimerPlaying= false
+          this.currentBook= null
+          this.currentBookIndex= 0
+        } */
       },
       showSliderVolume() {
         this.showslider = !this.showslider
-      }
+      },
+      generateTime() {
+        let width = (100 / this.audio.duration) * this.audio.currentTime;
+        this.barWidth = width + "%";
+        this.circleLeft = width + "%";
+        let durmin = Math.floor(this.audio.duration / 60);
+        let dursec = Math.floor(this.audio.duration - durmin * 60);
+        let curmin = Math.floor(this.audio.currentTime / 60);
+        let cursec = Math.floor(this.audio.currentTime - curmin * 60);
+        if (durmin < 10) {
+          durmin = "0" + durmin;
+        }
+        if (dursec < 10) {
+          dursec = "0" + dursec;
+        }
+        if (curmin < 10) {
+          curmin = "0" + curmin;
+        }
+        if (cursec < 10) {
+          cursec = "0" + cursec;
+        }
+        this.duration = durmin + ":" + dursec;
+        this.currentTime = curmin + ":" + cursec;
+      },
     }
   }
 </script>
