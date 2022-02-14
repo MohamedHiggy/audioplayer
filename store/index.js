@@ -74,6 +74,19 @@ export const mutations = {
   RESET(state) {
     state.audio.currentTime = 0;
     state.audio.src = state.current_book.source;
+  },
+
+  UPDETE_VOLUME(state, volume) {
+    state.audio.volume = volume
+  },
+
+  CLOSE(state) {
+    state.audio.pause();
+    state.audio.currentTime = 0;
+    state.audio = new Audio()
+    state.audioPaused = false
+    state.current_book = null
+    state.currentBookIndex= 0
   }
 };
 

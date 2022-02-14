@@ -70,7 +70,7 @@
                 </div>
               </div>
               <div class="progress-bottom">
-                <div class="progress-time">{{ currentTime }}</div> {{getAudioPaused}}
+                <div class="progress-time">{{ currentTime }}</div>
                 <div class="progress-time">{{ duration }}</div>
               </div>
           </div>
@@ -170,12 +170,11 @@
         barWidth: null,
         duration: null,
         currentTime: null,
-        isTimerPlaying: false,
       }
     },
     watch: {
       volume (newVal) {
-        this.$emit('setVolume', newVal)
+        this.$store.commit('UPDETE_VOLUME', newVal)
       },
     },
     created() {
@@ -245,20 +244,13 @@
           this.resetPlayer();
         },
       closeAudio () {
-        //this.$store.dispatch('closeAudio', false)
-        /* if (this.isTimerPlaying) {
-          this.audio.pause();
-          this.$store.dispatch('updatePlayedBook', false)
-          this.audio.currentTime = 0;
-          this.audio= null
+        if (this.getAudioPaused) {
+          this.$store.commit('CLOSE')
           this.circleLeft= null
           this.barWidth= null
           this.duration= null
           this.currentTime= null
-          this.isTimerPlaying= false
-          this.currentBook= null
-          this.currentBookIndex= 0
-        } */
+        }
       },
       showSliderVolume() {
         this.showslider = !this.showslider

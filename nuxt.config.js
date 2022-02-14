@@ -11,15 +11,12 @@ export default {
       { hid: 'description', name: 'description', content: 'audiobook' }
     ],
     link: [
-      //{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
 
   css: ["~assets/scss/main.scss"],
 
-  plugins: [
-    //"~plugins/persistedState.client.js"
-  ],
 
   components: [
     {
@@ -33,11 +30,7 @@ export default {
   ],
 
   bootstrapVue: {
-    bootstrapVueCSS: {
-      componentPlugins: [
-        'ToastPlugin',
-      ]
-    },
+    bootstrapVueCSS: false
   },
 
   build: {
