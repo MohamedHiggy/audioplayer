@@ -10,10 +10,12 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
   export default {
-    computed: {
-      ...mapState(['books'])
+    props: {
+      books: {
+        type: Array,
+        required: true
+      }
     }
   }
 </script>
