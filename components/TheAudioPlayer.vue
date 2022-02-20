@@ -190,6 +190,18 @@
       this.audio.onended = function () {
         vm.nextAudio();
       };
+
+      document.addEventListener('keyup', function (evt) {
+          if (evt.keyCode === 179) {
+              vm.playAudio();
+          }
+          if (evt.keyCode === 176) {
+              vm.nextAudio();
+          }
+          if (evt.keyCode === 177) {
+              vm.prevAudio();
+          }
+      });
     },
     computed: {
       ...mapState({
