@@ -109,15 +109,16 @@
               </svg>
             </button>
 
-            <button class="advanced-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="18" viewBox="0 0 30 18">
-                  <g id="Group_35455" data-name="Group 35455" transform="translate(-24 -81)">
-                    <g id="Group_28491" data-name="Group 28491" transform="translate(23 75)">
-                      <text id="_1.5X" data-name="1.5X" transform="translate(1 20)" font-size="14" font-family="IBMPlexSans-Medium, IBM Plex Sans" font-weight="500" letter-spacing="0em"><tspan x="0" y="0">1.5X</tspan></text>
-                    </g>
-                  </g>
-                </svg>
-            </button>
+            <div class="speed-box">
+              <button class="advanced-btn audio-speed-btn" @click="showSpeed = !showSpeed">
+                {{audioSpeed}} ✖
+              </button>
+              <ul class="list-style shadow" v-show="showSpeed">
+                <li class="list" v-for="item in speeds" :key="item.id" :class="[audioSpeed == item.speed ? 'active' : '']" @click="handelPlayerSpeed(item)">
+                  {{item.speed}}
+                </li>
+              </ul>
+            </div>
 
             <div class="volume-box">
               <button  @click="showSliderVolume" class="advanced-btn">
@@ -170,6 +171,37 @@
         barWidth: null,
         duration: null,
         currentTime: null,
+        showSpeed: false,
+        speeds: [
+          {
+            id: 1,
+            speed: 0.25
+          },
+          {
+            id: 2,
+            speed: 0.5
+          },
+          {
+            id: 3,
+            speed: 0.75
+          },
+          {
+            id: 4,
+            speed: 1
+          },
+          {
+            id: 5,
+            speed: 1.5
+          },
+          {
+            id: 6,
+            speed: 1.75
+          },
+          {
+            id: 7,
+            speed: 2
+          },
+        ]
       }
     },
     watch: {
@@ -192,7 +224,7 @@
       };
 
       document.addEventListener('keyup', function (evt) {
-          if (evt.keyCode === 179) {
+          if (evt.keyCode === 179 || evt.keyCode === 32) {
               vm.playAudio();
           }
           if (evt.keyCode === 176) {
@@ -209,7 +241,8 @@
         audioPaused: 'audioPaused',
         audio: 'audio',
         currentBookIndex: 'currentBookIndex',
-        books: 'books'
+        books: 'books',
+        audioSpeed: 'audioSpeed',
       }),
       ...mapGetters([
         'getAudioPaused'
@@ -290,6 +323,10 @@
         this.duration = durmin + ":" + dursec;
         this.currentTime = curmin + ":" + cursec;
       },
+      handelPlayerSpeed(event) {
+        this.$store.commit('HANDEL_PLAYER_SPEED', event.speed)
+        this.showSpeed = false
+      }
     }
   }
 </script>

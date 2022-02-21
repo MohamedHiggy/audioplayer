@@ -105,6 +105,37 @@
         border: none;
         background-color: transparent;
       }
+      .audio-speed-btn {
+        font-weight: bold;
+        font-size: 14px;
+      }
+      .speed-box {
+        position: relative;
+        .list-style {
+          position: absolute;
+          top: -195px;
+          left: -3px;
+          background-color: #fff;
+          border-radius: 5px;
+          text-align: center;
+          .list {
+            padding: 3px;
+            font-weight: 500;
+            color: #333;
+            font-size: 14px;
+            transition: 0.2s ease-in-out;
+            &:hover {
+              background-color: var(--main-color);
+              color: #fff;
+              cursor: pointer;
+            }
+          }
+          .list.active {
+            background-color: var(--main-color);
+            color: #fff;
+          }
+        }
+      }
       .volume-box {
         position: relative;
         .input-range {

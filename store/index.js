@@ -31,6 +31,7 @@ export const state = () => ({
   ],
   currentBookIndex: 0,
   current_book: null,
+  audioSpeed: 1,
   audioPaused: false,
   audio: new Audio()
 })
@@ -40,6 +41,7 @@ export const mutations = {
     state.current_book = current_book;
     state.audio.src = state.current_book.source;
     state.audio.currentTime = 0;
+    state.audio.playbackRate = state.audioSpeed;
   },
 
   SET_BOOK(state, current_book) {
@@ -48,22 +50,31 @@ export const mutations = {
     state.audio.src = current_book.item.source;
     state.currentBookIndex = current_book.index
     state.audioPaused = true;
+    state.audio.playbackRate = state.audioSpeed;
     state.audio.play();
   },
 
   SET_PLAYED_BOOK(state, audioPaused) {
     state.audioPaused = audioPaused;
+    state.audio.playbackRate = state.audioSpeed;
     if (audioPaused) {
       state.audio.play();
     } else {
       state.audio.pause();
     }
   },
+
+  HANDEL_PLAYER_SPEED(state, audioSpeed) {
+    state.audioSpeed = audioSpeed;
+    state.audio.playbackRate = state.audioSpeed;
+  },
   INCREMENT(state, action) {
     action ? state.currentBookIndex++ : state.currentBookIndex = 0
+    state.audio.playbackRate = state.audioSpeed;
   },
   DECREMENT(state, action) {
     action ? state.currentBookIndex-- : state.currentBookIndex = state.books.length - 1
+    state.audio.playbackRate = state.audioSpeed;
   },
   SET_BOOK_INDEX(state, currentBookIndex) {
     state.currentBookIndex = currentBookIndex;
