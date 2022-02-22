@@ -39,11 +39,19 @@ export const state = () => ({
 
 export const mutations = {
   SET_CURRENT_BOOK(state, current_book) {
-    state.current_book = current_book;
-    state.audio.src = state.current_book.source;
-    state.audio.currentTime = 0;
-    state.audio.playbackRate = state.audioSpeed;
-    state.audio.volume = state.audioVolume
+    if (current_book) {
+      state.current_book = current_book;
+      state.audio.src = state.current_book.source;
+      state.audio.currentTime = 0;
+      state.audio.playbackRate = state.audioSpeed;
+      state.audio.volume = state.audioVolume
+    }
+    else {
+      state.audio.src = state.current_book.source;
+      state.audio.currentTime = 0;
+      state.audio.playbackRate = state.audioSpeed;
+      state.audio.volume = state.audioVolume
+    }
   },
 
   SET_BOOK(state, current_book) {
@@ -58,7 +66,13 @@ export const mutations = {
   },
 
   UPDATE_CURRENT_TIME(state, currentTime) {
-    state.audio.currentTime = currentTime;
+    if (currentTime == 'positive') {
+      state.audio.currentTime += 10;
+    } else if (currentTime == 'negative') {
+      state.audio.currentTime -= 10;
+    } else {
+      state.audio.currentTime = currentTime
+    }
   },
 
   SET_PLAYED_BOOK(state, audioPaused) {

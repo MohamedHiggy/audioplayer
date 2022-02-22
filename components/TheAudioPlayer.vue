@@ -186,7 +186,7 @@
       };
 
       document.addEventListener('keyup', function (evt) {
-          if (evt.keyCode === 179 || evt.keyCode === 32) {
+          if (evt.keyCode === 179) {
               vm.playAudio();
           }
           if (evt.keyCode === 176) {
@@ -194,6 +194,12 @@
           }
           if (evt.keyCode === 177) {
               vm.prevAudio();
+          }
+          if (evt.keyCode === 39) {
+              vm.moveAudio('positive');
+          }
+          if (evt.keyCode === 37) {
+              vm.moveAudio('negative');
           }
       });
     },
@@ -313,6 +319,9 @@
         if (event) {
           this.$store.commit('UPDETE_VOLUME', event.target.value)
         }
+      },
+      moveAudio(event) {
+        this.$store.commit('UPDATE_CURRENT_TIME', event)
       }
     }
   }
