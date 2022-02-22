@@ -1,8 +1,8 @@
 <template>
   <div class="book-page">
-    <the-book-header />
-    <the-book-about />
-    <the-book-reviews />
+    <the-book-published />
+    <the-book-published />
+    <the-book-published />
     <the-book-published />
   </div>
 </template>

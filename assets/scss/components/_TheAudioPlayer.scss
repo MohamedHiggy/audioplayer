@@ -1,11 +1,10 @@
 .audio-player {
   background-color: var(--white);
   padding: 15px;
-  border-radius: 12px;
   position: fixed;
-  bottom: 15px;
+  bottom: 0px;
   z-index: 99;
-  width: calc(100% - 260px);
+  width: 100%;
   .player-box {
     display: flex;
     align-items: center;
@@ -61,26 +60,19 @@
           height: inherit;
           width: 0%;
           background-color: var(--main-color);
-          border-radius: 10px;
+          border-radius: 10px 0 0 10px;
           position: relative;
         }
         .progress-dot {
-          width: 18px;
-          height: 18px;
+          width: 9px;
+          height: 9px;
           background-color: var(--main-color);
           position: absolute;
-          bottom: 18px;
+          bottom: 22px;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          span {
-            background-color: var(--white);
-            width: 10px;
-            height: 10px;
-            display: block;
-            border-radius: 50%;
-          }
         }
       }
       .progress-bottom {

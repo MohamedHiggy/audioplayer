@@ -1,6 +1,6 @@
 <template>
   <div class="discover-page">
-    <h4 class="title">Discover</h4>
+    <h1 class="title">About</h1>
   </div>
 </template>
 

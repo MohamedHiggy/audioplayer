@@ -25,41 +25,7 @@ html,body {
 }
 
 
-main.active {
-  margin-left: 0px !important;
-}
-main {
-  margin-left: 230px;
-  transition: margin 0.5s;
-  min-height: 100vh;
-}
 
-.aside-nav.active {
-  width: 0px !important;
-}
-
-@media (min-width: 300px) and (max-width: 1023.98px) {
-  .aside-nav {
-    top: 87px !important;
-  }
-  main {
-    margin-left: 0px !important;
-    overflow: hidden;
-    margin-top: 100px !important;
-  }
-  .header-navbar {
-    position: fixed !important;
-  }
-}
-
-@media(max-width:768px){
-  .aside-nav {
-    top: 76px !important;
-  }
-  main {
-    margin-top: 75px !important;
-  }
-}
 
 .border-b-0 {
   border-bottom: 1px solid var(--border-color);

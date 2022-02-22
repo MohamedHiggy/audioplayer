@@ -33,6 +33,7 @@ export const state = () => ({
   current_book: null,
   audioSpeed: 1,
   audioPaused: false,
+  audioVolume: 1,
   audio: new Audio()
 })
 
@@ -42,6 +43,7 @@ export const mutations = {
     state.audio.src = state.current_book.source;
     state.audio.currentTime = 0;
     state.audio.playbackRate = state.audioSpeed;
+    state.audio.volume = state.audioVolume
   },
 
   SET_BOOK(state, current_book) {
@@ -51,12 +53,14 @@ export const mutations = {
     state.currentBookIndex = current_book.index
     state.audioPaused = true;
     state.audio.playbackRate = state.audioSpeed;
+    state.audio.volume = state.audioVolume
     state.audio.play();
   },
 
   SET_PLAYED_BOOK(state, audioPaused) {
     state.audioPaused = audioPaused;
     state.audio.playbackRate = state.audioSpeed;
+    state.audio.volume = state.audioVolume
     if (audioPaused) {
       state.audio.play();
     } else {
@@ -71,10 +75,12 @@ export const mutations = {
   INCREMENT(state, action) {
     action ? state.currentBookIndex++ : state.currentBookIndex = 0
     state.audio.playbackRate = state.audioSpeed;
+    state.audio.volume = state.audioVolume
   },
   DECREMENT(state, action) {
     action ? state.currentBookIndex-- : state.currentBookIndex = state.books.length - 1
     state.audio.playbackRate = state.audioSpeed;
+    state.audio.volume = state.audioVolume
   },
   SET_BOOK_INDEX(state, currentBookIndex) {
     state.currentBookIndex = currentBookIndex;
@@ -88,7 +94,8 @@ export const mutations = {
   },
 
   UPDETE_VOLUME(state, volume) {
-    state.audio.volume = volume
+    state.audioVolume = volume
+    state.audio.volume = state.audioVolume
   },
 
   CLOSE(state) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="audio-player shadow">
+  <div class="audio-player  shadow-lg">
         <section class="player-box">
           <div class="player-info">
             <img :src="currentBook.cover" alt="book image" width="60" height="60">
@@ -65,7 +65,7 @@
               </div>
               <div class="progress-bar">
                 <div class="progress-current" :style="{ width : barWidth }"></div>
-                <div class="progress-dot" :style="{ left : barWidth }">
+                <div class="progress-dot" :style="[barWidth == 0 ? {left : 0} : {left : dotPosition}]">
                   <span></span>
                 </div>
               </div>
@@ -121,8 +121,8 @@
             </div>
 
             <div class="volume-box">
-              <button  @click="showSliderVolume" class="advanced-btn">
-                <svg v-if="volume != 0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <button  @click="showslider = !showslider" class="advanced-btn">
+                <svg v-if="audioVolume != 0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                   <g id="Group_28449" data-name="Group 28449" transform="translate(-155 -726)">
                     <rect id="Rectangle_6073" data-name="Rectangle 6073" width="24" height="24" transform="translate(155 726)" fill="none"/>
                     <g id="Group_29111" data-name="Group 29111" transform="translate(154.75 726.592)">
@@ -134,7 +134,7 @@
                 </svg>
                 <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: #000"><path d="m7.727 6.313-4.02-4.02-1.414 1.414 18 18 1.414-1.414-2.02-2.02A9.578 9.578 0 0 0 21.999 12c0-4.091-2.472-7.453-5.999-9v2c2.387 1.386 3.999 4.047 3.999 7a8.13 8.13 0 0 1-1.671 4.914l-1.286-1.286C17.644 14.536 18 13.19 18 12c0-1.771-.775-3.9-2-5v7.586l-2-2V2.132L7.727 6.313zM4 17h2.697L14 21.868v-3.747L3.102 7.223A1.995 1.995 0 0 0 2 9v6c0 1.103.897 2 2 2z"></path></svg>
               </button>
-              <input type="range" v-if="showslider" class="input-range" step="0.005" min="0" max="1" v-model="volume">
+              <input type="range" v-if="showslider" class="input-range" step="0.005" min="0" max="1" :value="audioVolume" @change="handelPlayerVolume">
             </div>
 
             <button class="advanced-btn" @click="closeAudio" v-if="getAudioPaused">
@@ -165,13 +165,13 @@
   export default {
     data() {
       return {
-        volume: 1,
         showslider: false,
         circleLeft: null,
         barWidth: null,
         duration: null,
         currentTime: null,
         showSpeed: false,
+        dotPosition: null,
         speeds: [
           {
             id: 1,
@@ -203,11 +203,6 @@
           },
         ]
       }
-    },
-    watch: {
-      volume (newVal) {
-        this.$store.commit('UPDETE_VOLUME', newVal)
-      },
     },
     created() {
       let vm = this;
@@ -243,6 +238,7 @@
         currentBookIndex: 'currentBookIndex',
         books: 'books',
         audioSpeed: 'audioSpeed',
+        audioVolume: 'audioVolume',
       }),
       ...mapGetters([
         'getAudioPaused'
@@ -297,11 +293,10 @@
           this.currentTime= null
         }
       },
-      showSliderVolume() {
-        this.showslider = !this.showslider
-      },
       generateTime() {
         let width = (100 / this.audio.duration) * this.audio.currentTime;
+        let dot = (100 / this.audio.duration) * this.audio.currentTime - 0.5;
+        this.dotPosition = dot + "%"
         this.barWidth = width + "%";
         this.circleLeft = width + "%";
         let durmin = Math.floor(this.audio.duration / 60);
@@ -326,6 +321,11 @@
       handelPlayerSpeed(event) {
         this.$store.commit('HANDEL_PLAYER_SPEED', event.speed)
         this.showSpeed = false
+      },
+      handelPlayerVolume(event) {
+        if (event) {
+          this.$store.commit('UPDETE_VOLUME', event.target.value)
+        }
       }
     }
   }
