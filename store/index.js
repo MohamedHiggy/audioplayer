@@ -57,6 +57,10 @@ export const mutations = {
     state.audio.play();
   },
 
+  UPDATE_CURRENT_TIME(state, currentTime) {
+    state.audio.currentTime = currentTime;
+  },
+
   SET_PLAYED_BOOK(state, audioPaused) {
     state.audioPaused = audioPaused;
     state.audio.playbackRate = state.audioSpeed;
