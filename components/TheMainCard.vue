@@ -1,7 +1,7 @@
 <template>
   <div class="card shadow-sm">
     <div class="card-img-top" :class="[ getCurrentBook && getCurrentBook.id == item.id && getAudioPaused ? 'cardVisible': '']">
-      <img :src="item.cover" alt="Card image cap" height="408px" width="100%">
+      <img :src="item.cover" alt="Card image cap" height="200px" width="100%">
       <div class="play-box">
         <button class="play-btn" @click="playBook" v-if="getCurrentBook">
 
@@ -30,18 +30,7 @@
     </div>
     <div class="card-body">
       <h4 class="card-title">{{item.title}}</h4>
-      <div class="card-stats">
-        <div class="stat">
-          <img src="../assets/icons/shared/green_headSet.svg" alt="icon" width="28" height="28">
-          <p class="stat-text">12.Min</p>
-        </div>
-        <div class="stat">
-          <img src="../assets/icons/shared/greenBook.svg" alt="icon" width="28" height="28">
-          <p class="stat-text">
-            {{ item.books_pages > 1 ? item.books_pages + 'pages' : item.books_pages + 'page'}}
-          </p>
-        </div>
-      </div>
+      <p class="card-author">{{ item.author}}</p>
     </div>
   </div>
 </template>

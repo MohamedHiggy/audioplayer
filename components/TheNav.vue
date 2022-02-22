@@ -10,7 +10,9 @@
           <nuxt-link to="/about" class="nav-link">about</nuxt-link>
         </li>
       </ul>
-      <span class="navbar-text"> Navbar text with an inline element </span>
+      <div class="profile-content">
+        <span class="navbar-text"> Navbar text with an inline element </span>
+      </div>
     </div>
   </nav>
 </template>

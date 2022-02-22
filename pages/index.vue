@@ -1,9 +1,6 @@
 <template>
   <div class="book-page">
     <the-book-published />
-    <the-book-published />
-    <the-book-published />
-    <the-book-published />
   </div>
 </template>
 

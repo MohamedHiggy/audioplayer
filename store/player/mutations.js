@@ -1,43 +1,4 @@
-export const state = () => ({
-  books: [
-    {
-      id: 1,
-      title: "Audio 1",
-      author: "author 1",
-      source: "audio1.mp3",
-      cover: "https://dummyimage.com/600x200/2f00ff/ffffff.jpg&text=B",
-    },
-    {
-      id: 2,
-      title: "Audio 2",
-      author: "author 2",
-      source: "audio2.mp3",
-      cover: "https://dummyimage.com/600x200/ffffff/000000.jpg&text=B",
-    },
-    {
-      id: 3,
-      title: "Audio 3",
-      author: "author 3",
-      source: "audio3.mp3",
-      cover: "https://dummyimage.com/600x200/000000/ffffff.jpg&text=B",
-    },
-    {
-      id: 4,
-      title: "Audio 4",
-      author: "author 4",
-      source: "audio4.mp3",
-      cover: "https://dummyimage.com/600x200/ff00ff/000000.jpg&text=B",
-    },
-  ],
-  currentBookIndex: 0,
-  current_book: null,
-  audioSpeed: 1,
-  audioPaused: false,
-  audioVolume: 1,
-  audio: new Audio()
-})
-
-export const mutations = {
+export default {
   SET_CURRENT_BOOK(state, current_book) {
     if (current_book) {
       state.current_book = current_book;
@@ -125,28 +86,3 @@ export const mutations = {
     state.currentBookIndex= 0
   }
 };
-
-export const actions = {
-  updateCurrentBook({ commit }, payload) {
-    commit('SET_CURRENT_BOOK', payload);
-  },
-
-  updatePlayedBook({ commit }, payload) {
-    commit('SET_PLAYED_BOOK', payload);
-  },
-  setBookIndex({commit}, payload) {
-    commit('SET_BOOK_INDEX', payload);
-  },
-}
-
-export const getters = {
-  getBooks(state) {
-    return state.books
-  },
-  getCurrentBook(state) {
-    return state.current_book
-  },
-  getAudioPaused(state) {
-    return state.audioPaused
-  },
-}
