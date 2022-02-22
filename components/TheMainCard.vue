@@ -4,13 +4,13 @@
       <img :src="item.cover" alt="Card image cap" height="200px" width="100%">
       <div class="play-box">
         <button class="play-btn" @click="playBook" v-if="getCurrentBook">
-
             <div class="sound-wrapper w-full" v-if="getCurrentBook && getCurrentBook.id == item.id && getAudioPaused">
                 <div class="line line1"></div>
                 <div class="line line1"></div>
                 <div class="line line1"></div>
                 <div class="line line1"></div>
             </div>
+
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" v-else>
             <g id="Group_28436" data-name="Group 28436" transform="translate(-167 -738)">
               <rect id="Rectangle_6071" data-name="Rectangle 6071" width="32" height="32" transform="translate(167 738)" fill="none"/>

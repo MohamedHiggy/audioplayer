@@ -67,9 +67,9 @@ export const mutations = {
 
   UPDATE_CURRENT_TIME(state, currentTime) {
     if (currentTime == 'positive') {
-      state.audio.currentTime += 10;
+      state.audio.currentTime += 15;
     } else if (currentTime == 'negative') {
-      state.audio.currentTime -= 10;
+      state.audio.currentTime -= 15;
     } else {
       state.audio.currentTime = currentTime
     }
