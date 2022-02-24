@@ -8,7 +8,7 @@
         </div>
 
         <div class="player-actions">
-          <button class="side-btn" @click="prevAudio">
+          <button class="side-btn" @click="prevAudio" title="prev audio">
             <svg id="Group_28442" data-name="Group 28442" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <rect id="Rectangle_6072" data-name="Rectangle 6072" width="24" height="24" fill="none"/>
               <g id="Group_28440" data-name="Group 28440" transform="translate(2.77 5)">
@@ -17,7 +17,7 @@
               </g>
             </svg>
           </button>
-          <button class="center-btn" @click="moveAudio('negative')">
+          <button class="center-btn" @click="moveAudio('negative')" title="decrease 15 sec">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <g id="Group_28451" data-name="Group 28451" transform="translate(-155 -727)">
                 <rect id="Rectangle_6074" data-name="Rectangle 6074" width="24" height="24" transform="translate(155 727)" fill="none"/>
@@ -29,7 +29,7 @@
               </g>
             </svg>
           </button>
-          <button class="play-btn" @click="playAudio">
+          <button class="play-btn" @click="playAudio" :title=" getAudioPaused ? 'pause audio' : 'play audio'">
             <svg v-if="!getAudioPaused" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
               <g id="Group_28436" data-name="Group 28436" transform="translate(-167 -738)">
                 <rect id="Rectangle_6071" data-name="Rectangle 6071" width="32" height="32" transform="translate(167 738)" fill="none"/>
@@ -38,7 +38,7 @@
             </svg>
             <svg v-else xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" style="fill: #fff"><path d="M8 7h3v10H8zm5 0h3v10h-3z"></path></svg>
           </button>
-          <button class="center-btn" @click="moveAudio('positive')">
+          <button class="center-btn" @click="moveAudio('positive')" title="increase 15 sec">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <g id="Group_28449" data-name="Group 28449" transform="translate(-155 -726)">
                 <rect id="Rectangle_6073" data-name="Rectangle 6073" width="24" height="24" transform="translate(155 726)" fill="none"/>
@@ -50,7 +50,7 @@
               </g>
             </svg>
           </button>
-          <button class="side-btn" @click="nextAudio">
+          <button class="side-btn" @click="nextAudio" title="next audio">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <g id="Group_28441" data-name="Group 28441" transform="translate(-285 -738)">
                   <rect id="Rectangle_6072" data-name="Rectangle 6072" width="24" height="24" transform="translate(285 738)" fill="none"/>
@@ -80,8 +80,11 @@
         </div>
 
         <div class="player-advanced">
+          <button class="advanced-btn" @click="reapetAudio">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);"><path d="M21 6h-5v2h4v9H4V8h5v3l5-4-5-4v3H3a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1z"></path></svg>
+          </button>
           <div class="speed-box">
-            <button class="advanced-btn audio-speed-btn" @click="showSpeed = !showSpeed">
+            <button class="advanced-btn audio-speed-btn" @click="showSpeed = !showSpeed" title="audio speed">
               {{audioSpeed}} ✖
             </button>
             <ul class="list-style shadow" v-show="showSpeed">
@@ -91,7 +94,7 @@
             </ul>
           </div>
           <div class="volume-box">
-            <button  @click="showslider = !showslider" class="advanced-btn">
+            <button  @click="showslider = !showslider" class="advanced-btn" title="audio volume">
               <svg v-if="audioVolume != 0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <g id="Group_28449" data-name="Group 28449" transform="translate(-155 -726)">
                   <rect id="Rectangle_6073" data-name="Rectangle 6073" width="24" height="24" transform="translate(155 726)" fill="none"/>
@@ -106,7 +109,7 @@
             </button>
             <input type="range" v-if="showslider" class="input-range" step="0.05" min="0" max="1" v-model="volume">
           </div>
-          <button class="advanced-btn" @click="closeAudio" v-if="getAudioPaused">
+          <button class="advanced-btn" @click="closeAudio" v-if="getAudioPaused" title="close audio">
             <svg  xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
               <g id="Group_28463" data-name="Group 28463" transform="translate(-126 -724.424)">
                 <g id="Group_35297" data-name="Group 35297" transform="translate(126 764.424) rotate(-90)">
@@ -325,6 +328,9 @@
       },
       moveAudio(event) {
         this.$store.commit('UPDATE_CURRENT_TIME', event)
+      },
+      reapetAudio() {
+        console.log("reapetAudio");
       }
     }
   }
