@@ -3,38 +3,38 @@ import actions from './actions';
 import mutations from './mutations';
 
 const defaultState = () => ({
-  books: [
+  audios: [
     {
       id: 1,
-      title: "Book 1",
-      books_pages: 8,
+      title: "Audio 1",
+      audios_pages: 8,
       source: "audio1.mp3",
       cover: require("~/assets/images/card.jpg"),
     },
     {
       id: 2,
-      title: "Book 2",
-      books_pages: 48,
+      title: "Audio 2",
+      audios_pages: 48,
       source: "audio2.mp3",
       cover: require("~/assets/images/image.png"),
     },
     {
       id: 3,
-      title: "Book 3",
-      books_pages: 25,
+      title: "Audio 3",
+      audios_pages: 25,
       source: "audio3.mp3",
       cover: require("~/assets/images/card.jpg"),
     },
     {
       id: 4,
-      title: "Book 4",
-      books_pages: 32,
+      title: "Audio 4",
+      audios_pages: 32,
       source: "audio4.mp3",
       cover: require("~/assets/images/image.png"),
     },
   ],
-  currentBookIndex: 0,
-  current_book: null,
+  currentAudioIndex: 0,
+  current_audio: null,
   audioSpeed: 1,
   audioPaused: false,
   audioVolume: 1,

@@ -1,5 +1,5 @@
 export default {
-  getBooks: state => state.books,
-  getCurrentBook: state => state.current_book,
+  getaudios: state => state.audios,
+  getcurrentAudio: state => state.current_audio,
   getAudioPaused: state => state.audioPaused
 };

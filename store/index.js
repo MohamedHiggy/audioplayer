@@ -1,5 +1,5 @@
 export const state = () => ({
-  books: [
+  audios: [
     {
       id: 1,
       title: "Audio 1",
@@ -29,8 +29,8 @@ export const state = () => ({
       cover: "https://dummyimage.com/600x200/ff00ff/000000.jpg&text=B",
     },
   ],
-  currentBookIndex: 0,
-  current_book: null,
+  currentAudioIndex: 0,
+  current_audio: null,
   audioSpeed: 1,
   audioPaused: false,
   audioVolume: 1,
@@ -38,27 +38,27 @@ export const state = () => ({
 })
 
 export const mutations = {
-  SET_CURRENT_BOOK(state, current_book) {
-    if (current_book) {
-      state.current_book = current_book;
-      state.audio.src = state.current_book.source;
+  SET_current_audio(state, current_audio) {
+    if (current_audio) {
+      state.current_audio = current_audio;
+      state.audio.src = state.current_audio.source;
       state.audio.currentTime = 0;
       state.audio.playbackRate = state.audioSpeed;
       state.audio.volume = state.audioVolume
     }
     else {
-      state.audio.src = state.current_book.source;
+      state.audio.src = state.current_audio.source;
       state.audio.currentTime = 0;
       state.audio.playbackRate = state.audioSpeed;
       state.audio.volume = state.audioVolume
     }
   },
 
-  SET_BOOK(state, current_book) {
+  SET_AUDIO(state, current_audio) {
     state.audio.currentTime = 0;
-    state.current_book = current_book.item;
-    state.audio.src = current_book.item.source;
-    state.currentBookIndex = current_book.index
+    state.current_audio = current_audio.item;
+    state.audio.src = current_audio.item.source;
+    state.currentAudioIndex = current_audio.index
     state.audioPaused = true;
     state.audio.playbackRate = state.audioSpeed;
     state.audio.volume = state.audioVolume
@@ -75,7 +75,7 @@ export const mutations = {
     }
   },
 
-  SET_PLAYED_BOOK(state, audioPaused) {
+  SET_PLAYED_AUDIO(state, audioPaused) {
     state.audioPaused = audioPaused;
     state.audio.playbackRate = state.audioSpeed;
     state.audio.volume = state.audioVolume
@@ -91,24 +91,24 @@ export const mutations = {
     state.audio.playbackRate = state.audioSpeed;
   },
   INCREMENT(state, action) {
-    action ? state.currentBookIndex++ : state.currentBookIndex = 0
+    action ? state.currentAudioIndex++ : state.currentAudioIndex = 0
     state.audio.playbackRate = state.audioSpeed;
     state.audio.volume = state.audioVolume
   },
   DECREMENT(state, action) {
-    action ? state.currentBookIndex-- : state.currentBookIndex = state.books.length - 1
+    action ? state.currentAudioIndex-- : state.currentAudioIndex = state.audios.length - 1
     state.audio.playbackRate = state.audioSpeed;
     state.audio.volume = state.audioVolume
   },
-  SET_BOOK_INDEX(state, currentBookIndex) {
-    state.currentBookIndex = currentBookIndex;
+  SET_AUDIO_INDEX(state, currentAudioIndex) {
+    state.currentAudioIndex = currentAudioIndex;
   },
-  UPDATE_BOOK(state) {
-    state.current_book = state.books[state.currentBookIndex]
+  UPDATE_AUDIO(state) {
+    state.current_audio = state.audios[state.currentAudioIndex]
   },
   RESET(state) {
     state.audio.currentTime = 0;
-    state.audio.src = state.current_book.source;
+    state.audio.src = state.current_audio.source;
   },
 
   UPDETE_VOLUME(state, volume) {
@@ -121,30 +121,30 @@ export const mutations = {
     state.audio.currentTime = 0;
     state.audio = new Audio()
     state.audioPaused = false
-    state.current_book = null
-    state.currentBookIndex= 0
+    state.current_audio = null
+    state.currentAudioIndex= 0
   }
 };
 
 export const actions = {
-  updateCurrentBook({ commit }, payload) {
-    commit('SET_CURRENT_BOOK', payload);
+  updatecurrentAudio({ commit }, payload) {
+    commit('SET_current_audio', payload);
   },
 
-  updatePlayedBook({ commit }, payload) {
-    commit('SET_PLAYED_BOOK', payload);
+  updatePlayedAudio({ commit }, payload) {
+    commit('SET_PLAYED_AUDIO', payload);
   },
-  setBookIndex({commit}, payload) {
-    commit('SET_BOOK_INDEX', payload);
+  setAudioIndex({commit}, payload) {
+    commit('SET_AUDIO_INDEX', payload);
   },
 }
 
 export const getters = {
-  getBooks(state) {
-    return state.books
+  getaudios(state) {
+    return state.audios
   },
-  getCurrentBook(state) {
-    return state.current_book
+  getcurrentAudio(state) {
+    return state.current_audio
   },
   getAudioPaused(state) {
     return state.audioPaused

@@ -4,20 +4,30 @@
     <div class="container pt-5 mt-3">
       <Nuxt />
     </div>
-    <the-audio-player  v-if="current_book"/>
+    <the-audio-player  v-if="current_audio"/>
   </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
 export default {
+  beforeDestroy() {
+    if (this.getAudioPaused) {
+      this.$store.commit('CLOSE')
+      this.circleLeft= null
+      this.barWidth= null
+      this.duration= null
+      this.currentTime= null
+    }
+  },
   computed: {
     ...mapGetters({
-      current_book: 'getCurrentBook'
+      current_audio: 'getcurrentAudio',
+      getAudioPaused: 'getAudioPaused'
     })
   },
   created() {
-    this.$store.commit('SET_CURRENT_BOOK', this.$store.state.books[0])
+    this.$store.commit('SET_current_audio', this.$store.state.audios[0])
   },
 };
 </script>

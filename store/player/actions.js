@@ -1,12 +1,12 @@
 export default {
-  updateCurrentBook(context, payload) {
-    context.commit('SET_CURRENT_BOOK', payload);
+  updatecurrentAudio(context, payload) {
+    context.commit('SET_current_audio', payload);
   },
 
-  updatePlayedBook(context, payload) {
-    context.commit('SET_PLAYED_BOOK', payload);
+  updatePlayedAudio(context, payload) {
+    context.commit('SET_PLAYED_AUDIO', payload);
   },
-  setBookIndex(context, payload) {
-    context.commit('SET_BOOK_INDEX', payload);
+  setAudioIndex(context, payload) {
+    context.commit('SET_AUDIO_INDEX', payload);
   },
 };

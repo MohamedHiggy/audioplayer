@@ -3,8 +3,8 @@
       <section class="player-box">
 
         <div class="player-info">
-          <img :src="currentBook.cover" alt="book image" width="60" height="60">
-          <p class="text"> {{currentBook.title}}</p>
+          <img :src="currentAudio.cover" alt="audio image" width="60" height="60">
+          <p class="text"> {{currentAudio.title}}</p>
         </div>
 
         <div class="player-actions">
@@ -109,22 +109,6 @@
             </button>
             <input type="range" v-if="showslider" class="input-range" step="0.05" min="0" max="1" v-model="volume">
           </div>
-          <button class="advanced-btn" @click="closeAudio" v-if="getAudioPaused" title="close audio">
-            <svg  xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
-              <g id="Group_28463" data-name="Group 28463" transform="translate(-126 -724.424)">
-                <g id="Group_35297" data-name="Group 35297" transform="translate(126 764.424) rotate(-90)">
-                  <rect id="Rectangle_6585" data-name="Rectangle 6585" width="40" height="40" rx="20" fill="#e16262" opacity="0.1"/>
-                  <g id="Group_35047" data-name="Group 35047" transform="translate(10 10)">
-                    <rect id="Rectangle_6579" data-name="Rectangle 6579" width="20" height="20" fill="none"/>
-                    <g id="Group_35295" data-name="Group 35295" transform="translate(3.88 4.167)">
-                      <path id="Path_53" data-name="Path 53" d="M20.4,22.684a1.037,1.037,0,0,1-1.469,0L14.152,17.9a1.037,1.037,0,0,1,0-1.469l4.781-4.781A1.039,1.039,0,0,1,20.4,13.122l-4.042,4.052L20.4,21.215A1.047,1.047,0,0,1,20.4,22.684Z" transform="translate(-8.753 -11.348)" fill="#e16262"/>
-                      <path id="Path_284584" data-name="Path 284584" d="M6.555,11.336a1.037,1.037,0,0,1-1.469,0L.3,6.555a1.037,1.037,0,0,1,0-1.469L5.086.3A1.039,1.039,0,0,1,6.555,1.773L2.513,5.826,6.555,9.867A1.047,1.047,0,0,1,6.555,11.336Z" transform="translate(6.859 11.641) rotate(180)" fill="#e16262"/>
-                    </g>
-                  </g>
-                </g>
-              </g>
-            </svg>
-          </button>
         </div>
       </section>
   </div>
@@ -184,7 +168,7 @@
     },
     created() {
       let vm = this;
-      this.$store.dispatch('updatePlayedBook', false)
+      this.$store.dispatch('updatePlayedAudio', false)
 
       this.audio.ontimeupdate = function () {
         vm.generateTime();
@@ -216,11 +200,11 @@
     },
     computed: {
       ...mapState({
-        currentBook: 'current_book',
+        currentAudio: 'current_audio',
         audioPaused: 'audioPaused',
         audio: 'audio',
-        currentBookIndex: 'currentBookIndex',
-        books: 'books',
+        currentAudioIndex: 'currentAudioIndex',
+        audios: 'audios',
         audioSpeed: 'audioSpeed',
         audioVolume: 'audioVolume',
       }),
@@ -231,18 +215,18 @@
     methods: {
       playAudio() {
         if (!this.audioPaused) {
-          this.$store.dispatch('updatePlayedBook', true)
+          this.$store.dispatch('updatePlayedAudio', true)
         } else {
-          this.$store.dispatch('updatePlayedBook', false)
+          this.$store.dispatch('updatePlayedAudio', false)
         }
       },
       nextAudio () {
-        if (this.currentBookIndex < this.books.length - 1) {
+        if (this.currentAudioIndex < this.audios.length - 1) {
           this.$store.commit('INCREMENT', true)
         } else {
           this.$store.commit('INCREMENT', false)
         }
-        this.$store.commit('UPDATE_BOOK')
+        this.$store.commit('UPDATE_AUDIO')
         this.resetPlayer();
       },
       resetPlayer() {
@@ -251,29 +235,20 @@
         this.$store.commit('RESET')
         setTimeout(() => {
           if (this.getAudioPaused) {
-            this.$store.dispatch('updatePlayedBook', true)
+            this.$store.dispatch('updatePlayedAudio', true)
           } else {
-            this.$store.dispatch('updatePlayedBook', false)
+            this.$store.dispatch('updatePlayedAudio', false)
           }
         }, 300);
       },
       prevAudio () {
-          if (this.currentBookIndex > 0) {
+          if (this.currentAudioIndex > 0) {
             this.$store.commit('DECREMENT', true)
           } else {
             this.$store.commit('DECREMENT', false)
           }
-          this.$store.commit('UPDATE_BOOK')
+          this.$store.commit('UPDATE_AUDIO')
           this.resetPlayer();
-      },
-      closeAudio () {
-        if (this.getAudioPaused) {
-          this.$store.commit('CLOSE')
-          this.circleLeft= null
-          this.barWidth= null
-          this.duration= null
-          this.currentTime= null
-        }
       },
       generateTime() {
         let width = (100 / this.audio.duration) * this.audio.currentTime;
@@ -315,11 +290,11 @@
         this.circleLeft = percentage + "%";
 
         this.$store.commit('UPDATE_CURRENT_TIME', (maxduration * percentage) / 100)
-        this.$store.dispatch('updatePlayedBook', true)
+        this.$store.dispatch('updatePlayedAudio', true)
 
       },
       clickProgress(e) {
-        this.$store.dispatch('updatePlayedBook', false)
+        this.$store.dispatch('updatePlayedAudio', false)
         this.updateBar(e.pageX);
       },
       handelPlayerSpeed(event) {

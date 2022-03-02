@@ -7,12 +7,9 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <nuxt-link to="/about" class="nav-link">about</nuxt-link>
+          <nuxt-link to="/video" class="nav-link">record video</nuxt-link>
         </li>
       </ul>
-      <div class="profile-content">
-        <span class="navbar-text"> Navbar text with an inline element </span>
-      </div>
     </div>
   </nav>
 </template>

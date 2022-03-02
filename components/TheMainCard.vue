@@ -1,10 +1,10 @@
 <template>
   <div class="card shadow-sm">
-    <div class="card-img-top" :class="[ getCurrentBook && getCurrentBook.id == item.id && getAudioPaused ? 'cardVisible': '']">
+    <div class="card-img-top" :class="[ getcurrentAudio && getcurrentAudio.id == item.id && getAudioPaused ? 'cardVisible': '']">
       <img :src="item.cover" alt="Card image cap" height="200px" width="100%">
       <div class="play-box">
-        <button class="play-btn" @click="playBook" v-if="getCurrentBook">
-            <div class="sound-wrapper w-full" v-if="getCurrentBook && getCurrentBook.id == item.id && getAudioPaused">
+        <button class="play-btn" @click="playAudio" v-if="getcurrentAudio">
+            <div class="sound-wrapper w-full" v-if="getcurrentAudio && getcurrentAudio.id == item.id && getAudioPaused">
                 <div class="line line1"></div>
                 <div class="line line1"></div>
                 <div class="line line1"></div>
@@ -18,7 +18,7 @@
             </g>
           </svg>
         </button>
-        <button class="play-btn" @click="addBook" v-else>
+        <button class="play-btn" @click="addAudio" v-else>
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
             <g id="Group_28436" data-name="Group 28436" transform="translate(-167 -738)">
               <rect id="Rectangle_6071" data-name="Rectangle 6071" width="32" height="32" transform="translate(167 738)" fill="none"/>
@@ -50,26 +50,26 @@
     },
     computed: {
       ...mapGetters([
-        'getCurrentBook',
+        'getcurrentAudio',
         'getAudioPaused'
       ])
     },
     methods: {
-      addBook() {
-        this.$store.commit('SET_CURRENT_BOOK', this.item)
+      addAudio() {
+        this.$store.commit('SET_current_audio', this.item)
       },
-      playBook() {
+      playAudio() {
 
-        if (this.item.id != this.getCurrentBook.id) {
+        if (this.item.id != this.getcurrentAudio.id) {
           let payload = {
             index: this.index,
             item: this.item
           }
-          this.$store.commit('SET_BOOK', payload)
+          this.$store.commit('SET_AUDIO', payload)
         }
 
-        if (this.item.id == this.getCurrentBook.id && this.getAudioPaused == false) {
-          this.$store.dispatch('updatePlayedBook', true)
+        if (this.item.id == this.getcurrentAudio.id && this.getAudioPaused == false) {
+          this.$store.dispatch('updatePlayedAudio', true)
         }
       }
     }
