@@ -31,6 +31,7 @@ export const state = () => ({
   ],
   currentAudioIndex: 0,
   shuffle: false,
+  reapetaudio: false,
   current_audio: null,
   audioSpeed: 1,
   audioPaused: false,
@@ -96,13 +97,23 @@ export const mutations = {
     state.shuffle = !state.shuffle
   },
 
+  REAPET_AUDIO(state) {
+    state.reapetaudio = !state.reapetaudio
+  },
+
   INCREMENT(state, action) {
-    if (action && state.shuffle) {
+    if (action && state.shuffle && !state.reapetaudio) {
       const newAudios  =  state.audios.map((item, index) => index)
       let randomElement = newAudios[Math.floor(Math.random() * newAudios.length)];
       state.currentAudioIndex = randomElement
-    } else if (action && !state.shuffle) {
+    } else if (action && !state.shuffle && !state.reapetaudio) {
       state.currentAudioIndex++
+    } else if (action && state.shuffle && state.reapetaudio) {
+      state.currentAudioIndex = state.currentAudioIndex
+      state.reapetaudio = false
+    } else if (action && !state.shuffle && state.reapetaudio) {
+      state.currentAudioIndex = state.currentAudioIndex
+      state.reapetaudio = false
     } else {
       state.currentAudioIndex = 0
     }
