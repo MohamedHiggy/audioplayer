@@ -30,6 +30,7 @@ export const state = () => ({
     },
   ],
   currentAudioIndex: 0,
+  shuffle: false,
   current_audio: null,
   audioSpeed: 1,
   audioPaused: false,
@@ -90,22 +91,39 @@ export const mutations = {
     state.audioSpeed = audioSpeed;
     state.audio.playbackRate = state.audioSpeed;
   },
+
+  SHUFFLE(state) {
+    state.shuffle = !state.shuffle
+  },
+
   INCREMENT(state, action) {
-    action ? state.currentAudioIndex++ : state.currentAudioIndex = 0
+    if (action && state.shuffle) {
+      const newAudios  =  state.audios.map((item, index) => index)
+      let randomElement = newAudios[Math.floor(Math.random() * newAudios.length)];
+      state.currentAudioIndex = randomElement
+    } else if (action && !state.shuffle) {
+      state.currentAudioIndex++
+    } else {
+      state.currentAudioIndex = 0
+    }
     state.audio.playbackRate = state.audioSpeed;
     state.audio.volume = state.audioVolume
   },
+
   DECREMENT(state, action) {
     action ? state.currentAudioIndex-- : state.currentAudioIndex = state.audios.length - 1
     state.audio.playbackRate = state.audioSpeed;
     state.audio.volume = state.audioVolume
   },
+
   SET_AUDIO_INDEX(state, currentAudioIndex) {
     state.currentAudioIndex = currentAudioIndex;
   },
+
   UPDATE_AUDIO(state) {
     state.current_audio = state.audios[state.currentAudioIndex]
   },
+
   RESET(state) {
     state.audio.currentTime = 0;
     state.audio.src = state.current_audio.source;
