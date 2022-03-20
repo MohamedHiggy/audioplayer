@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <nuxt-link to="/video" class="nav-link">record video</nuxt-link>
+          <nuxt-link to="/test" class="nav-link">test</nuxt-link>
         </li>
       </ul>
     </div>
@@ -22,4 +22,12 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.navbar {
+  background-color: var(--white);
+  a {
+    color: var(--title-text-color);
+  }
+}
+
+</style>

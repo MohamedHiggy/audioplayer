@@ -28,9 +28,9 @@ export default {
 
   UPDATE_CURRENT_TIME(state, currentTime) {
     if (currentTime == 'positive') {
-      state.audio.currentTime += 10;
+      state.audio.currentTime += 15;
     } else if (currentTime == 'negative') {
-      state.audio.currentTime -= 10;
+      state.audio.currentTime -= 15;
     } else {
       state.audio.currentTime = currentTime
     }
@@ -51,22 +51,49 @@ export default {
     state.audioSpeed = audioSpeed;
     state.audio.playbackRate = state.audioSpeed;
   },
+
+  SHUFFLE(state) {
+    state.shuffle = !state.shuffle
+  },
+
+  REAPET_AUDIO(state) {
+    state.reapetaudio = !state.reapetaudio
+  },
+
   INCREMENT(state, action) {
-    action ? state.currentAudioIndex++ : state.currentAudioIndex = 0
+    if (action && state.shuffle && !state.reapetaudio) {
+      const newAudios  =  state.audios.map((item, index) => index)
+      let randomElement = newAudios[Math.floor(Math.random() * newAudios.length)];
+      state.currentAudioIndex = randomElement
+    } else if (action && !state.shuffle && !state.reapetaudio) {
+      state.currentAudioIndex++
+    } else if (action && state.shuffle && state.reapetaudio) {
+      state.currentAudioIndex = state.currentAudioIndex
+      state.reapetaudio = false
+    } else if (action && !state.shuffle && state.reapetaudio) {
+      state.currentAudioIndex = state.currentAudioIndex
+      state.reapetaudio = false
+    } else {
+      state.currentAudioIndex = 0
+    }
     state.audio.playbackRate = state.audioSpeed;
     state.audio.volume = state.audioVolume
   },
+
   DECREMENT(state, action) {
     action ? state.currentAudioIndex-- : state.currentAudioIndex = state.audios.length - 1
     state.audio.playbackRate = state.audioSpeed;
     state.audio.volume = state.audioVolume
   },
+
   SET_AUDIO_INDEX(state, currentAudioIndex) {
     state.currentAudioIndex = currentAudioIndex;
   },
+
   UPDATE_AUDIO(state) {
     state.current_audio = state.audios[state.currentAudioIndex]
   },
+
   RESET(state) {
     state.audio.currentTime = 0;
     state.audio.src = state.current_audio.source;

@@ -14,10 +14,6 @@ export default {
   beforeDestroy() {
     if (this.getAudioPaused) {
       this.$store.commit('CLOSE')
-      this.circleLeft= null
-      this.barWidth= null
-      this.duration= null
-      this.currentTime= null
     }
   },
   computed: {
