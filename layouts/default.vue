@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   data() {
     return {
@@ -37,13 +37,22 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      currentAudioIndex: 'currentAudioIndex',
+      audios: 'audios',
+    }),
     ...mapGetters({
       current_audio: "getcurrentAudio",
       getAudioPaused: "getAudioPaused",
     }),
   },
   created() {
-    this.$store.commit("SET_current_audio", this.$store.state.audios[0]);
+    const audioIndex = localStorage.getItem('currentIndex')
+    if (audioIndex) {
+      this.$store.commit("SET_current_audio", this.audios[audioIndex]);
+    } else {
+      this.$store.commit("SET_current_audio", this.audios[0]);
+    }
   },
 };
 </script>

@@ -65,6 +65,7 @@ export const mutations = {
     state.audio.playbackRate = state.audioSpeed;
     state.audio.volume = state.audioVolume
     state.audio.play();
+    localStorage.setItem('currentIndex', current_audio.index)
   },
 
   UPDATE_CURRENT_TIME(state, currentTime) {
@@ -119,12 +120,14 @@ export const mutations = {
     }
     state.audio.playbackRate = state.audioSpeed;
     state.audio.volume = state.audioVolume
+    localStorage.setItem('currentIndex', state.currentAudioIndex)
   },
 
   DECREMENT(state, action) {
     action ? state.currentAudioIndex-- : state.currentAudioIndex = state.audios.length - 1
     state.audio.playbackRate = state.audioSpeed;
     state.audio.volume = state.audioVolume
+    localStorage.setItem('currentIndex', state.currentAudioIndex)
   },
 
   SET_AUDIO_INDEX(state, currentAudioIndex) {
@@ -152,6 +155,7 @@ export const mutations = {
     state.audioPaused = false
     state.current_audio = null
     state.currentAudioIndex= 0
+    localStorage.removeItem('currentIndex')
   }
 };
 
