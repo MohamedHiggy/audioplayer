@@ -50,6 +50,7 @@ export default {
     const audioIndex = localStorage.getItem('currentIndex')
     if (audioIndex) {
       this.$store.commit("SET_current_audio", this.audios[audioIndex]);
+      this.$store.commit("SET_AUDIO_INDEX", audioIndex);
     } else {
       this.$store.commit("SET_current_audio", this.audios[0]);
     }
