@@ -143,11 +143,6 @@ export default {
 .no-select {
   user-select: none;
 }
-
-.deafult-layout {
-  position: relative;
-}
-
 .hideElemnt {
   animation: hidedraggable 1s linear;
   animation-fill-mode: forwards;
@@ -179,6 +174,12 @@ export default {
     visibility: visible;
     opacity: 1;
     right: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .draggable-box {
+    display: none;
   }
 }
 </style>

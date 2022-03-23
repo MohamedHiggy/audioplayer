@@ -1,7 +1,7 @@
 <template>
   <div class="deafult-layout">
     <the-nav />
-    <div class="container pt-5 mt-3">
+    <div class="container pt-5 content-layout">
       <Nuxt />
     </div>
 
@@ -38,8 +38,8 @@ export default {
   },
   computed: {
     ...mapState({
-      currentAudioIndex: 'currentAudioIndex',
-      audios: 'audios',
+      currentAudioIndex: "currentAudioIndex",
+      audios: "audios",
     }),
     ...mapGetters({
       current_audio: "getcurrentAudio",
@@ -47,7 +47,7 @@ export default {
     }),
   },
   created() {
-    const audioIndex = localStorage.getItem('currentIndex')
+    const audioIndex = localStorage.getItem("currentIndex");
     if (audioIndex) {
       this.$store.commit("SET_current_audio", this.audios[audioIndex]);
       this.$store.commit("SET_AUDIO_INDEX", audioIndex);
@@ -59,5 +59,20 @@ export default {
 </script>
 
 <style lang="scss">
+.deafult-layout {
+  position: relative;
+  .content-layout {
+    margin-bottom: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .deafult-layout {
+    position: relative;
+    .content-layout {
+      margin-bottom: 300px !important;
+    }
+  }
+}
 </style>
 

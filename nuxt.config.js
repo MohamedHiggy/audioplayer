@@ -45,7 +45,7 @@ export default {
   },
 
   loading: {
-    color: '#3A9679',
+    color: '#2a6592',
     height: '2px',
     continuous: true
   }
