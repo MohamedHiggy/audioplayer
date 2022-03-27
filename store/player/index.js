@@ -33,6 +33,21 @@ const defaultState = () => ({
       cover: "https://dummyimage.com/600x200/ff00ff/000000.jpg&text=B",
     },
   ],
+  notes: [
+    {
+      audio_id: 1,
+      audio_notes: [
+        {
+          "note_time": 0.182221,
+          "note_text": "qwdqwd"
+        },
+        {
+          "note_time": 0.694032,
+          "note_text": "aaaaaaaaaacccqwdq"
+        }
+      ]
+    }
+  ],
   currentAudioIndex: 0,
   shuffle: false,
   reapetaudio: false,
@@ -44,8 +59,9 @@ const defaultState = () => ({
 });
 
 export default {
+  namespaced: true,
   state: defaultState,
-  getters,
-  actions,
-  mutations,
+  mutations: mutations,
+  getters: getters,
+  actions: actions,
 };

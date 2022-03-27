@@ -24,6 +24,7 @@ export default {
     state.audio.playbackRate = state.audioSpeed;
     state.audio.volume = state.audioVolume
     state.audio.play();
+    localStorage.setItem('currentIndex', current_audio.index)
   },
 
   UPDATE_CURRENT_TIME(state, currentTime) {
@@ -78,12 +79,14 @@ export default {
     }
     state.audio.playbackRate = state.audioSpeed;
     state.audio.volume = state.audioVolume
+    localStorage.setItem('currentIndex', state.currentAudioIndex)
   },
 
   DECREMENT(state, action) {
     action ? state.currentAudioIndex-- : state.currentAudioIndex = state.audios.length - 1
     state.audio.playbackRate = state.audioSpeed;
     state.audio.volume = state.audioVolume
+    localStorage.setItem('currentIndex', state.currentAudioIndex)
   },
 
   SET_AUDIO_INDEX(state, currentAudioIndex) {
@@ -111,5 +114,34 @@ export default {
     state.audioPaused = false
     state.current_audio = null
     state.currentAudioIndex= 0
-  }
+    localStorage.removeItem('currentIndex')
+  },
+
+
+  SET_NOTE(state, event) {
+    const elementFound = state.notes.find(element => element.audio_id === event.audio_id);
+
+    if (elementFound) {
+      for (let index = 0; index < state.notes.length; index++) {
+        if (state.notes[index].audio_id === event.audio_id) {
+          const payload = {
+            note_time: event.note_time,
+            note_text: event.note_text
+          }
+          state.notes[index].audio_notes.push(payload)
+        }
+      }
+    }
+
+    if (!elementFound) {
+      const payload = {
+        audio_id: event.audio_id,
+        audio_notes: [{
+          note_time: event.note_time,
+          note_text: event.note_text
+        }]
+      }
+      state.notes.push(payload)
+    }
+  },
 };
