@@ -29,6 +29,7 @@ export const state = () => ({
       cover: "https://dummyimage.com/600x200/ff00ff/000000.jpg&text=B",
     },
   ],
+  notes: [],
   currentAudioIndex: 0,
   shuffle: false,
   reapetaudio: false,

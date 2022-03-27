@@ -1,8 +1,10 @@
 <template>
   <div class="audio-page">
-    <div class="row mt-5">
-      <div class="col-lg-3 col-md-4 col-12 mb-3" v-for="(item, index) in audios" :key="item.id">
-        <TheMainCard :item="item" :index="index"/>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-4 col-12 mb-3" v-for="(item, index) in audios" :key="item.id">
+          <TheMainCard :item="item" :index="index"/>
+        </div>
       </div>
     </div>
   </div>
