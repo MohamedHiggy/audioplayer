@@ -32,7 +32,7 @@ export default {
     return {
       expandBox: false,
       note_modal: false,
-      note_time: ''
+      note_time: 0
     };
   },
   beforeDestroy() {

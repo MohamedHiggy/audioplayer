@@ -29,7 +29,21 @@ export const state = () => ({
       cover: "https://dummyimage.com/600x200/ff00ff/000000.jpg&text=B",
     },
   ],
-  notes: [],
+  notes: [
+    {
+      audio_id: 1,
+      audio_notes: [
+        {
+          "note_time": 0.182221,
+          "note_text": "qwdqwd"
+        },
+        {
+          "note_time": 0.694032,
+          "note_text": "aaaaaaaaaacccqwdq"
+        }
+      ]
+    }
+  ],
   currentAudioIndex: 0,
   shuffle: false,
   reapetaudio: false,
@@ -157,7 +171,35 @@ export const mutations = {
     state.current_audio = null
     state.currentAudioIndex= 0
     localStorage.removeItem('currentIndex')
-  }
+  },
+
+
+  SET_NOTE(state, event) {
+    const elementFound = state.notes.find(element => element.audio_id === event.audio_id);
+
+    if (elementFound) {
+      for (let index = 0; index < state.notes.length; index++) {
+        if (state.notes[index].audio_id === event.audio_id) {
+          const payload = {
+            note_time: event.note_time,
+            note_text: event.note_text
+          }
+          state.notes[index].audio_notes.push(payload)
+        }
+      }
+    }
+
+    if (!elementFound) {
+      const payload = {
+        audio_id: event.audio_id,
+        audio_notes: [{
+          note_time: event.note_time,
+          note_text: event.note_text
+        }]
+      }
+      state.notes.push(payload)
+    }
+  },
 };
 
 export const actions = {
@@ -168,9 +210,14 @@ export const actions = {
   updatePlayedAudio({ commit }, payload) {
     commit('SET_PLAYED_AUDIO', payload);
   },
+
   setAudioIndex({commit}, payload) {
     commit('SET_AUDIO_INDEX', payload);
   },
+
+  leaveNote({commit}, payload) {
+    commit('SET_NOTE', payload);
+  }
 }
 
 export const getters = {

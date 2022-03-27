@@ -5,7 +5,10 @@
         <div class="modal-container">
           <div class="modal-content">
             <input type="text" class="modal-input" v-model="note" placeholder="Leave a note">
-            <button type="button" class="modal-btn" @click="leaveNote" title="Leave a note" :disabled="!note">leave a note</button>
+            <button type="button" class="modal-btn" @click="leaveNote" title="Leave a note" :disabled="!note  || isLoading">
+              leave a note
+              <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
           </div>
           <button class="modal-close" @click="dismiss">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: #fff"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>
@@ -17,6 +20,7 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex'
   export default {
     props: {
       show: {
@@ -25,13 +29,14 @@
         default: false,
       },
       time: {
-        type: String,
+        type: Number,
         required: true
       }
     },
 
     data() {
       return {
+        isLoading: false,
         note: ''
       }
     },
@@ -50,17 +55,30 @@
       }
     },
 
+
+    computed: {
+      ...mapState({
+        current_audio: 'current_audio',
+      })
+    },
+
     methods: {
       dismiss() {
         this.note = ''
         this.$emit("close")
       },
       leaveNote() {
+        this.isLoading = true
         const payload = {
           note_time: this.time,
-          note_text: this.note
+          note_text: this.note,
+          audio_id: this.current_audio.id
         }
-        console.log(`this.note`, payload);
+        setTimeout(() => {
+          this.$store.dispatch('leaveNote', payload)
+          this.isLoading = false
+          this.dismiss()
+        }, 500);
       }
     }
   }
@@ -93,7 +111,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
     transition: all .3s ease;
     margin: 0 auto;
-    padding: 10px;
+    padding: 30px 20px;
   }
   &-close {
     border: none;
@@ -106,10 +124,10 @@
   }
 
   &-content {
-    flex-direction: row;
     display: flex;
     align-items: center;
     justify-content: space-around;
+    gap: 15px;
     border: none;
   }
 
@@ -119,7 +137,7 @@
     border-radius: 10px;
     background-color: var(--white);
     outline: none;
-    width: 45%;
+    width: 100%;
     padding: 12px 15px;
   }
 
@@ -129,7 +147,7 @@
     border: 1px solid var(--main-color);
     color: var(--white);
     text-transform: uppercase;
-    width: 45%;
+    width: 100%;
     height: 50px;
     transition: 0.3s ease-in-out;
     &:hover {
@@ -165,14 +183,6 @@
       padding: 0 15px;
     }
     &-container {
-      width: 100%;
-      padding: 25px 10px;
-    }
-    &-content {
-      flex-direction: column;
-      gap: 15px;
-    }
-    &-input, &-btn {
       width: 100%;
     }
   }

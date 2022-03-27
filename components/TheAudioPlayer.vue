@@ -64,7 +64,16 @@
         </div>
 
         <div class="player-progress" ref="progress">
-            <div class="progress-top">
+            <div class="player-notes" v-for="item in notes" :key="item.audio_id">
+              <ul class="list-style" v-if="item.audio_id === currentAudio.id">
+                <the-note-box
+                  v-for="(note, index) in item.audio_notes"
+                  :key="index"
+                  :note_text="note.note_text"
+                  :note_time="note.note_time"
+                  :current-time="audio.currentTime"
+                  :duration="audio.duration"/>
+              </ul>
             </div>
             <div class="progress-bar" @click="clickProgress">
               <div class="progress-current" :style="{ width : barWidth }"></div>
@@ -76,7 +85,7 @@
               <div class="progress-time">{{ currentTime ? currentTime : '00:00' }}</div>
               <div class="progress-time">{{ duration ? duration : '00:00' }}</div>
             </div>
-          <div v-cloak></div>
+            <div v-cloak></div>
         </div>
 
         <div class="player-advanced">
@@ -215,6 +224,7 @@
     },
     computed: {
       ...mapState({
+        notes: 'notes',
         currentAudio: 'current_audio',
         audioPaused: 'audioPaused',
         audio: 'audio',
@@ -322,7 +332,7 @@
         this.$store.commit('UPDATE_CURRENT_TIME', event)
       },
       addNote() {
-        this.$emit('leaveNote', this.currentTime ? this.currentTime : '00:00')
+        this.$emit('leaveNote', this.audio.currentTime)
         if (this.audioPaused) {
           this.$store.dispatch('updatePlayedAudio', false)
         }

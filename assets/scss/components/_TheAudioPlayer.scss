@@ -52,6 +52,37 @@
       width: 343px;
       user-select: none;
       position: relative;
+      .player-notes {
+        .list-style {
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          .list {
+            width: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            .list-box {
+              position: absolute;
+              top: -35px;
+              right: 15px;
+              background-color: var(--white);
+              color: var(--title-text-color);
+              width: 150px;
+              padding: 10px;
+              border-radius: 5px;
+              transition: all 0.3s;
+              .text {
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                overflow: hidden;
+              }
+            }
+          }
+        }
+      }
       .progress-bar {
         height: 5px;
         width: 100%;
