@@ -11,6 +11,11 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "e2e": "start-server-and-test dev http://localhost:3000 cypress:open",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
     "heroku-postbuild": "nuxt build"
   },
   "dependencies": {
@@ -20,6 +25,7 @@
     "nuxt": "^2.15.3"
   },
   "devDependencies": {
+    "cypress": "^10.2.0",
     "fibers": "^5.0.0",
     "sass": "^1.42.1",
     "sass-loader": "^10.2.0"

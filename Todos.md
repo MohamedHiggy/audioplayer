@@ -1,0 +1,26 @@
+# Todos
+
+- [x] configure pages
+- [x] components UI
+- [ ] audio actions
+      - [x]   play and pause
+      - [x]   next and prev
+      - [x]   sound
+      - [x]   speed
+      - [x]   shuffle
+      - [x]   repetition
+      - [x]   play audio when switching between pages
+      - [ ]   add comment
+      - [ ]   lyrics
+- [ ] enhance UI
+- [x] configure cypress
+- [ ] test scenarios
+      - [ ]   play and pause
+      - [ ]   next and prev
+      - [ ]   sound
+      - [ ]   speed
+      - [ ]   shuffle
+      - [ ]   repetition
+      - [ ]   play audio when switching between pages
+      - [ ]   add comment
+      - [ ]   lyrics
